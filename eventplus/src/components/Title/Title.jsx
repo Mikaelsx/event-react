@@ -1,7 +1,7 @@
 import React from 'react';
 import "./Title.css"
 
-const Titulo = ( { titleText, additionalClass = "", color = "" } ) => {
+const Title = ( { titleText, additionalClass = "", color = "" } ) => {
     return (
             <h1 className={`title ${additionalClass}`} style={{color: color}} >
                 {titleText}
@@ -13,4 +13,4 @@ const Titulo = ( { titleText, additionalClass = "", color = "" } ) => {
     );
 };
 
-export default Titulo;
+export default Title;
