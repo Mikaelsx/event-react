@@ -5,7 +5,7 @@ import MainContent from '../../components/MainContent/MainContent';
 import Container from '../../components/Container/Container'
 import ImageIllustartor from '../../components/ImageIllustartor/ImageIllustartor';
 import eventTypeImage from '../../assets/images/tipo-evento.svg'
-import { Button, Input } from '../../components/FormComponents/FormComponents';
+import { Button, Input, Select } from '../../components/FormComponents/FormComponents';
 import api from '../../Services/Service'
 import TableTp from './TableTp/TableTp';
 import Notification from '../../components/Notification/Notification';
@@ -72,19 +72,28 @@ const TipoEventos = () => {
 
         try {
             //Salvar os dados
-            const retorno = await api.put(`/TiposEventos/${idTipoEvento}`,{
+            const retorno = await api.put(`/TiposEvento/${idTipoEvento}`,{
                 titulo: title
             })
 
             //Atualizar o state (GET)
-            const retornoGet = await api.get('/TiposEventos');
+            const retornoGet = await api.get('/TiposEvento');
             setTiposEventos(retornoGet.data); // Atualiza o state da tabela
 
-            alert("Atualizado com sucesso.")
+            console.log("Atualizado com sucesso.");
             editActionAbort();
         } catch (error) {
-            alert("Problemas na atualização")
+            console.log("Problemas na atualização");
         }
+
+        setNotifyUser({
+            titleNote: "Sucesso",
+            textNote: `Atualizado com sucesso!`,
+            imgIcon: "success",
+            imgAlt:
+              "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+            showMessage: true,
+          });
     }
     async function showUpdateForm(idTipoEvento) {
         setFrmEdit(true);
@@ -104,10 +113,20 @@ const TipoEventos = () => {
     function handleDelete(id) {
         try {
             api.delete(`/TiposEvento/${id}`)
+            console.log("Deletado com sucesso.")
         } catch (error) {
             console.log("deu ruim aq")
             console.log(error);
         }
+
+        setNotifyUser({
+            titleNote: "Sucesso",
+            textNote: `Deletado com sucesso!`,
+            imgIcon: "success",
+            imgAlt:
+              "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+            showMessage: true,
+        });
     }
 
     return (

@@ -1,6 +1,5 @@
 // IMPORTS
 
-
 import React, { useEffect, useState } from 'react';
 import './EventosPage.css'
 
@@ -9,11 +8,11 @@ import MainContent from '../../components/MainContent/MainContent';
 import Container from '../../components/Container/Container'
 import ImageIllustartor from '../../components/ImageIllustartor/ImageIllustartor';
 import eventImage from '../../assets/images/evento.svg'
-import { Button ,Input } from '../../components/FormComponents/FormComponents';
+import { Button ,Input, Select } from '../../components/FormComponents/FormComponents';
 import api from '../../Services/Service'
-import TableTp from '../TipoEventosPage/TableTp/TableTp';
 import Notification from '../../components/Notification/Notification';
 import Spinner from '../../components/Spinner/Spinner';
+import TableEvent from './TableEvent/TableEvent';
 
 
 
@@ -29,23 +28,26 @@ const EventosPage = () => {
     const [name, setName] = useState("")
     const [descricao, setDescricao] = useState("")
     const [tipoEvento, setTipoEvento] = useState("")
-    const [data, setData] = useState("")
+    const [eventDate, setEventDate] = useState("")
+
     const [evento, setEvento] = useState([])
     const [idevento, setIdEvento] = useState("")
-
-    const [tiposEventos, setTiposEventos] = useState([]);// TESTE
+    const [tiposEvento, setTiposEvento] = useState([]);// TESTE
 
 // ---------------------------------------------------------------- //
 
 // LISTAR
-    useEffect(() =>{
-        async function getEventos() {
-            // setShowSpinner(true);
+    useEffect(() => {
+        async function getEvento() {
+            setShowSpinner(true);
         // Chamar api (GET)
             try {
                 const promise = await api.get("/Evento")
+                const tipoE = await api.get("/TiposEvento")
                 console.log(promise.data);
                 setEvento(promise.data)
+                setTipoEvento(tipoE.data)
+
             }
         // Erro na api (GET)  
             catch (error) 
@@ -54,7 +56,7 @@ const EventosPage = () => {
                 console.log(error)
             }
         }
-        getEventos()
+        getEvento()
     }, [])
 
 // ---------------------------------------------------------------- //
@@ -70,7 +72,7 @@ const EventosPage = () => {
         }
     // Chamar api (POST)
         try {
-            const retorno = await api.post("/Evento", { NomeEvento: name })
+            const retorno = await api.post("/Evento", { NomeEvento: name, Descricao: descricao, TipoEvento: tipoEvento, DataEvento: eventDate,})
             console.log("Cadastrado com sucesso!");
             console.log(retorno.data);
             setName("")
@@ -103,7 +105,7 @@ const EventosPage = () => {
             const retornoGet = await api.get('/Evento');
             setEvento(retornoGet.data)
             alert("Cadastrado com sucesso!")
-            //editActionAbort();
+            editActionAbort();
         } 
     // Erro na api (GET)
         catch (error) 
@@ -115,13 +117,13 @@ const EventosPage = () => {
 // ---------------------------------------------------------------- //
 
 // UPDATE FORM
-    async function showUpdateForm(idevento) {
+    async function showUpdateForm(idEvento) {
         setFrmEdit(true)
 
         try {
-            const retorno = await api.get(`/Evento/${idevento}`)
+            const retorno = await api.get(`/Evento/${idEvento}`)
             setName(retorno.data.NomeEvento)
-            setIdEvento(idevento)
+            setIdEvento(idEvento)
         } 
         catch (error) 
         {
@@ -146,10 +148,20 @@ const EventosPage = () => {
     {
         try {
             api.delete(`/Evento/${id}`)
+            console.log("Deletado com sucesso");
         } catch (error) {
             console.log("Erro inesperado na API.");
             console.log(error);
         }
+
+        setNotifyUser({
+            titleNote: "Sucesso",
+            textNote: `Deletado com sucesso!`,
+            imgIcon: "success",
+            imgAlt:
+              "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+            showMessage: true,
+          });
     }
 
 // ---------------------------------------------------------------- //
@@ -205,14 +217,14 @@ return (
                                         required={"required"}
                                         value={descricao}
                                         manipulationFunction={(e) => {
-                                            setName(e.target.value)
+                                            setDescricao(e.target.value)
                                         }
                                     }
                                     
                                 />
 
                                 {/* INPUT TIPO EVENTO */}
-                                    <Input 
+                                    <Select 
                                         type={"text"}
                                         id={"Tipoevento"}
                                         name={"Tipoevento"}
@@ -220,20 +232,20 @@ return (
                                         required={"required"}
                                         value={tipoEvento}
                                         manipulationFunction={(e) => {
-                                            setName(e.target.value)
+                                            setTipoEvento(e.target.value)
                                         }
                                     }
                                 />
                                 {/* INPUT DATA DO EVENTO */}
                                     <Input 
-                                        type={"nunber"}
+                                        type={"number"}
                                         id={"Dataevento"}
                                         name={"Dataevento"}
                                         placeholder={"data"}
                                         required={"required"}
-                                        value={data}
+                                        value={eventDate}
                                         manipulationFunction={(e) => {
-                                            setName(e.target.value)
+                                            setEventDate(e.target.value)
                                         }
                                     }
                                 />
@@ -263,16 +275,44 @@ return (
                                     }
                                 />
 
-                                {/* INPUT TIPO EVENTO */}
+                                {/* INPUT DESCRICAO DO EVENTO */}
                                     <Input 
+                                        type={"text"}
+                                        id={"Descricao"}
+                                        name={"Descricao"}
+                                        placeholder={"Descrição"}
+                                        required={"required"}
+                                        value={descricao}
+                                        manipulationFunction={(e) => {
+                                            setDescricao(e.target.value)
+                                        }
+                                    }
+                                    
+                                />
+
+                                {/* INPUT TIPO EVENTO */}
+                                    <Select 
                                         type={"text"}
                                         id={"Tipoevento"}
                                         name={"Tipoevento"}
                                         placeholder={"Tipo Evento"}
                                         required={"required"}
-                                        value={tiposEventos}
+                                        value={tipoEvento}
                                         manipulationFunction={(e) => {
-                                            setName(e.target.value)
+                                            setTipoEvento(e.target.value)
+                                        }
+                                    }
+                                />
+                                {/* INPUT DATA DO EVENTO */}
+                                    <Input 
+                                        type={"number"}
+                                        id={"Dataevento"}
+                                        name={"Dataevento"}
+                                        placeholder={"data"}
+                                        required={"required"}
+                                        value={eventDate}
+                                        manipulationFunction={(e) => {
+                                            setEventDate(e.target.value)
                                         }
                                     }
                                 />
@@ -311,7 +351,7 @@ return (
         <section className='lista-eventos-section'>
             <Container>
                 <Title titleText={"Lista de eventos"} color="white"/>
-                <TableTp
+                <TableEvent
                 dados={evento}
                 fnUpdate={showUpdateForm}
                 fnDelete={handleDelete}
