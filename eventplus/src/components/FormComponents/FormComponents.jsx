@@ -48,13 +48,13 @@ export const Button =({
 };
 
 export const Select =({
-    dados = [],
+    dados,
     id,
     name,
     required,
     additionalclass = "",
     manipulationFunction,
-    defaultValue
+    defaultValue,
 }) => {
     return(
         <select 
@@ -67,7 +67,7 @@ export const Select =({
         >
             <option value="">Selecione</option>
             {dados.map((opt) => {
-                return <option key={opt.value} value={opt.value}>{opt.text}</option>
+                return <option  key={opt.idTipoEvento} value={opt.idTipoEvento}>{opt.titulo}</option>
             })}
         </select>
     );

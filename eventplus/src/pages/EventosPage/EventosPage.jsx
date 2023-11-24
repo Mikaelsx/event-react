@@ -29,9 +29,11 @@ const EventosPage = () => {
     const [descricao, setDescricao] = useState("")
     const [tipoEvento, setTipoEvento] = useState("")
     const [eventDate, setEventDate] = useState("")
+    const [idInstituicao, setIdInstituicao] = useState("63e9879b-9d01-43ae-914b-0863bcb349e3")
+    
 
     const [evento, setEvento] = useState([])
-    const [idevento, setIdEvento] = useState("")
+    const [idEvento, setIdEvento] = useState("")
     const [tiposEvento, setTiposEvento] = useState([]);// TESTE
 
 // ---------------------------------------------------------------- //
@@ -44,9 +46,9 @@ const EventosPage = () => {
             try {
                 const promise = await api.get("/Evento")
                 const tipoE = await api.get("/TiposEvento")
-                console.log(promise.data);
+                console.log(tipoE.data);
                 setEvento(promise.data)
-                setTipoEvento(tipoE.data)
+                setTiposEvento(tipoE.data)
 
             }
         // Erro na api (GET)  
@@ -72,10 +74,23 @@ const EventosPage = () => {
         }
     // Chamar api (POST)
         try {
-            const retorno = await api.post("/Evento", { NomeEvento: name, Descricao: descricao, TipoEvento: tipoEvento, DataEvento: eventDate,})
+            const retorno = await api.post("/Evento", { 
+                nomeEvento: name, 
+                descricao: descricao,
+                idTipoEvento: tipoEvento, 
+                dataEvento: eventDate,
+                idInstituicao: idInstituicao 
+                })
             console.log("Cadastrado com sucesso!");
             console.log(retorno.data);
             setName("")
+            setDescricao("")
+            setTipoEvento("")
+            setEventDate("")
+
+            const event = await api.get(`/Evento`);
+            console.log(event.data);
+            setEvento(event.data)
         }
     // Erro na api (POST)    
         catch (error)
@@ -92,6 +107,8 @@ const EventosPage = () => {
               "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
             showMessage: true,
         })
+
+        
     }
 
 // ---------------------------------------------------------------- //
@@ -100,18 +117,36 @@ const EventosPage = () => {
     async function handleUpdate(e) {
         e.preventDefault();
 
-    // Atualizar state (GET)
+    // Salvar os dados (PUT)
         try {
+            const retorno = await api.put(`/Evento/${idEvento}`,{
+                NomeEvento : name
+            })
+    // Atualizar state (GET)
             const retornoGet = await api.get('/Evento');
             setEvento(retornoGet.data)
-            alert("Cadastrado com sucesso!")
+            console.log("Atualizado com sucesso!");
             editActionAbort();
+
+            const event = await api.get(`/Evento`);
+            console.log(event.data);
+            setEvento(event.data)
         } 
     // Erro na api (GET)
         catch (error) 
         {
-            alert("Erro inesperado na API.")
+            console.log("Erro inesperado na API.");
+            console.log(evento.data)
         }
+
+        setNotifyUser({
+            titleNote: "Sucesso",
+            textNote: `Atualizado com sucesso!`,
+            imgIcon: "success",
+            imgAlt:
+              "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+            showMessage: true,
+          });
     }
 
 // ---------------------------------------------------------------- //
@@ -144,11 +179,12 @@ const EventosPage = () => {
 // ---------------------------------------------------------------- //
 
 // HANDLE DELETE
-    function handleDelete(id) 
+    async function handleDelete(id) 
     {
         try {
             api.delete(`/Evento/${id}`)
             console.log("Deletado com sucesso");
+            
         } catch (error) {
             console.log("Erro inesperado na API.");
             console.log(error);
@@ -162,6 +198,10 @@ const EventosPage = () => {
               "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
             showMessage: true,
           });
+
+          const event = await api.get(`/Evento`);
+            console.log(event.data);
+            setEvento(event.data)
     }
 
 // ---------------------------------------------------------------- //
@@ -224,8 +264,9 @@ return (
                                 />
 
                                 {/* INPUT TIPO EVENTO */}
-                                    <Select 
+                                    <Select
                                         type={"text"}
+                                        dados={tiposEvento}
                                         id={"Tipoevento"}
                                         name={"Tipoevento"}
                                         placeholder={"Tipo Evento"}
@@ -238,10 +279,9 @@ return (
                                 />
                                 {/* INPUT DATA DO EVENTO */}
                                     <Input 
-                                        type={"number"}
+                                        type={"date"}
                                         id={"Dataevento"}
                                         name={"Dataevento"}
-                                        placeholder={"data"}
                                         required={"required"}
                                         value={eventDate}
                                         manipulationFunction={(e) => {
@@ -293,9 +333,9 @@ return (
                                 {/* INPUT TIPO EVENTO */}
                                     <Select 
                                         type={"text"}
+                                        dados={tiposEvento}
                                         id={"Tipoevento"}
                                         name={"Tipoevento"}
-                                        placeholder={"Tipo Evento"}
                                         required={"required"}
                                         value={tipoEvento}
                                         manipulationFunction={(e) => {
@@ -305,7 +345,7 @@ return (
                                 />
                                 {/* INPUT DATA DO EVENTO */}
                                     <Input 
-                                        type={"number"}
+                                        type={"date"}
                                         id={"Dataevento"}
                                         name={"Dataevento"}
                                         placeholder={"data"}

@@ -101,6 +101,9 @@ const TipoEventos = () => {
             const retorno = await api.get(`/TiposEvento/${idTipoEvento}`)
             setTitle(retorno.data.titulo)
             setIdTipoEventos(idTipoEvento)
+
+            const retornoGet = await api.get('/TiposEvento');
+            setTiposEventos(retornoGet.data);
         } catch (error) {
             console.log("deu ruim aq");
         }
@@ -110,10 +113,13 @@ const TipoEventos = () => {
         setTitle("")
         setIdTipoEventos(null);
     }
-    function handleDelete(id) {
+    async function handleDelete(id) {
         try {
             api.delete(`/TiposEvento/${id}`)
             console.log("Deletado com sucesso.")
+
+            const retornoGet = await api.get('/TiposEvento');
+            setTiposEventos(retornoGet.data);
         } catch (error) {
             console.log("deu ruim aq")
             console.log(error);
