@@ -8,8 +8,13 @@ import ContactSection from "../../components/ContactSection/ContactSection";
 import NextEvent from "../../components/NextEvent/NextEvent";
 import Container from "../../components/Container/Container";
 import api from '../../Services/Service'
+import { useContext } from "react";
+import { UserContext } from "../../context/AuthContext";
 
 const HomePage = () => {
+  const {userData} = useContext(UserContext)
+  console.log("DADOS GLOBAIS DO USUARIO");
+  console.log(userData);
   //Fake mock - api mocada
   const [nextEvents, setNextEvents] = useState([]);
 

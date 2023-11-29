@@ -158,6 +158,8 @@ const EventosPage = () => {
         try {
             const retorno = await api.get(`/Evento/${idEvento}`)
             setName(retorno.data.NomeEvento)
+            // setDescricao
+            // setEventDate
             setIdEvento(idEvento)
         } 
         catch (error) 

@@ -5,7 +5,7 @@ import MainContent from '../../components/MainContent/MainContent';
 import Container from '../../components/Container/Container'
 import ImageIllustartor from '../../components/ImageIllustartor/ImageIllustartor';
 import eventTypeImage from '../../assets/images/tipo-evento.svg'
-import { Button, Input, Select } from '../../components/FormComponents/FormComponents';
+import { Button, Input } from '../../components/FormComponents/FormComponents';
 import api from '../../Services/Service'
 import TableTp from './TableTp/TableTp';
 import Notification from '../../components/Notification/Notification';
