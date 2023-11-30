@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ImageIllustrator from "../../components/ImageIllustartor/ImageIllustartor";
 import logo from "../../assets/images/logo-pink.svg";
 import { Input, Button } from "../../components/FormComponents/FormComponents";
@@ -7,11 +7,18 @@ import "./LoginPage.css";
 import loginImage from "../../assets/images/login.svg"
 import api from '../../Services/Service'
 import { UserContext, userDecodeToken } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const [user, setUser] = useState({email: "admin@admin.com", senha: "123456"});
-
+  const [user, setUser] = useState({email: "mika@gmail.com", senha: "12345"});
+  const navigate = useNavigate();
   const {userData, setUserData} = useContext(UserContext);
+
+  useEffect(() => {
+    if(userData.name) navigate("/")
+  }, [userData])
+
+  
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -28,6 +35,7 @@ const LoginPage = () => {
 
             setUserData(userFullToken);
             localStorage.setItem("token", JSON.stringify(userFullToken));
+            navigate("/");
             
         } catch (error) {
             alert("Ooops... parece que o(a) email / senha foi digitado(a) de forma errada. ")
