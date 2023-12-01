@@ -9,17 +9,50 @@ import TestePage from '../pages/TestePage/TestePage';
 
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer'
+import { PrivateRoute } from './PrivateRoute';
 const routes = () => {
     return (
         <div>
             <BrowserRouter>
                 <Header/>
                 <Routes>
-                    <Route element= {<HomePage />} path='/'/>
-                    <Route element= {<TipoEventosPage />} path='/TipoDeEventos'/>
-                    <Route element= {<EventosPage />} path='/Eventos'/>
-                    <Route element= {<LoginPage />} path='/Login'/>
-                    <Route element= {<TestePage />} path='/Teste'/>
+
+                    <Route 
+                        element= {<HomePage />} 
+                        path='/'
+                    />
+
+                    <Route 
+                        path='/tipo-eventos'
+                        element= {
+                        <PrivateRoute redirectTo='/'>
+                            <TipoEventosPage />
+                        </PrivateRoute>
+                        } 
+                        
+                    />
+
+                    <Route 
+                        path='/eventos'
+                        element= {
+                        <PrivateRoute redirectTo='/'>
+                            <EventosPage />
+                        </PrivateRoute>
+                        }
+                    />
+
+                    <Route // 
+                        path='/eventos-aluno'
+                        element= {
+                        <PrivateRoute redirectTo='/'>
+                            <EventosPage />
+                        </PrivateRoute>
+                    } 
+                        
+                    />
+
+                    <Route element= {<LoginPage />} path='/login'/>
+                    <Route element= {<TestePage />} path='/teste'/>
                 </Routes>
                 <Footer/>
             </BrowserRouter>

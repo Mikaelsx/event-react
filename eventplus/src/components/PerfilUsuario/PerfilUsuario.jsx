@@ -19,7 +19,7 @@ const PerfilUsuario = () => {
     <div className="perfil-usuario">
         {userData.name ? (
             <>
-            <span className="perfil-usuario__menuitem">{userData.name}.S &nbsp;</span>
+            <span className="perfil-usuario__menuitem">{userData.name} &nbsp;</span>
             
             
             <img

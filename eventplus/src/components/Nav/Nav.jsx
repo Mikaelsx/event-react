@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Nav.css'
 import LogoMobile from '../../assets/images/logo-white.svg'
 import LogoDesktop from '../../assets/images/logo-pink.svg'
+import { UserContext } from '../../context/AuthContext';
 
 
 
 const Nav = ( {exibeNavbar, setExibeNavbar } ) => {
+
+    const {userData} = useContext(UserContext);
+
     return (
         <nav className={`navbar ${exibeNavbar ? "exibeNavbar" : ""}`}>
 
@@ -25,9 +29,22 @@ const Nav = ( {exibeNavbar, setExibeNavbar } ) => {
             </Link>
 
             <div className='navbar__items-box'>
+                {/* LINK PUBLICO */}
                 <Link to="/" className='navbar__item'>Home</Link>
-                <Link to="/TipoDeEventos" className='navbar__item'>Tipo Eventos</Link>
-                <Link to="/Eventos" className='navbar__item'>Eventos</Link>
+
+                {/* LINKS PRIVADOS */}
+                {userData.name && userData.role === "Admin" ? (
+                    <>
+                        <Link to="/tipo-eventos" className='navbar__item'>Tipo Eventos</Link>
+                        <Link to="/eventos" className='navbar__item'>Eventos</Link>
+                    </>
+                ) : (
+                    userData.name && userData.role === "Comum" ? (
+                        <Link to="/eventos-aluno" className='navbar__item'>EventosA</Link>
+                    ) : (null)
+                )}
+
+                
             </div>
         </nav>
     );
