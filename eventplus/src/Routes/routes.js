@@ -6,10 +6,12 @@ import TipoEventosPage from '../pages/TipoEventosPage/TipoEventosPage';
 import EventosPage from '../pages/EventosPage/EventosPage'
 import LoginPage from '../pages/LoginPage/LoginPage';
 import TestePage from '../pages/TestePage/TestePage';
+import EventosAluno from '../pages/EventosAlunoPage/EventosAluno';
 
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer'
 import { PrivateRoute } from './PrivateRoute';
+import EventosAlunoPage from '../pages/EventosAlunoPage/EventosAluno';
 const routes = () => {
     return (
         <div>
@@ -45,7 +47,7 @@ const routes = () => {
                         path='/eventos-aluno'
                         element= {
                         <PrivateRoute redirectTo='/'>
-                            <EventosPage />
+                            <EventosAluno />
                         </PrivateRoute>
                     } 
                         
