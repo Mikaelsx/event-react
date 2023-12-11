@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Azure.CognitiveServices.ContentModerator;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.Reflection;
@@ -117,6 +118,14 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
         });
 });
+
+// Habilita o serviço de moderador de conteúdo do azure
+builder.Services.AddSingleton(provider => new ContentModeratorClient(
+    new ApiKeyServiceClientCredentials("998bdb1859be47869584ca8fd2d1de63"))
+{
+    Endpoint = "https://eventcontentmoderator-m.cognitiveservices.azure.com/"
+}
+    );
 
 var app = builder.Build();
 

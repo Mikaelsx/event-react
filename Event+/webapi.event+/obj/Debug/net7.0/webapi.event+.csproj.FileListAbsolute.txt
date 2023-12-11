@@ -1039,3 +1039,6 @@ C:\Users\51915337801\Desktop\event-react\Event+\webapi.event+\obj\Debug\net7.0\s
 C:\Users\51915337801\Desktop\event-react\Event+\webapi.event+\obj\Debug\net7.0\webapi.event+.csproj.CopyComplete
 C:\Users\51915337801\Desktop\event-react\Event+\webapi.event+\obj\Debug\net7.0\webapi.event+.genruntimeconfig.cache
 C:\Users\51915337801\Desktop\event-react\Event+\webapi.event+\obj\Debug\net7.0\ref\webapi.event+.dll
+C:\Users\51915337801\Desktop\event-react\Event+\webapi.event+\bin\Debug\net7.0\Microsoft.Azure.CognitiveServices.ContentModerator.dll
+C:\Users\51915337801\Desktop\event-react\Event+\webapi.event+\bin\Debug\net7.0\Microsoft.Rest.ClientRuntime.dll
+C:\Users\51915337801\Desktop\event-react\Event+\webapi.event+\bin\Debug\net7.0\Microsoft.Rest.ClientRuntime.Azure.dll
