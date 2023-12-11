@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const apiPort = "5000";
-const localApi = `http://localhost:${apiPort}/api`;
-const externalApi = null;
+//const apiPort = "5000";
+//const localApi = `http://localhost:${apiPort}/api`;
+const externalApi = `https://eventplus.azurewebsites.net/api`;
 
 /*export*/ const api = axios.create({
-    baseURL : localApi
+    baseURL : externalApi
 })
 
 export default api;
