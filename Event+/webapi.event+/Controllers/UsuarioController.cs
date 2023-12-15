@@ -33,5 +33,18 @@ namespace webapi.event_.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                return Ok(_usuarioRepository.Listar());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }          

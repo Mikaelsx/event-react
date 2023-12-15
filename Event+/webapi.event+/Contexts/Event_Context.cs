@@ -31,12 +31,12 @@ namespace webapi.event_.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // String de conexão local
-            //optionsBuilder.UseSqlServer("Server = NOTE05-S15; Database = Event+; User Id = sa; pwd = Senai@134; TrustServerCertificate = True");
+            optionsBuilder.UseSqlServer("Server = NOTE05-S15; Database = Event+; User Id = sa; pwd = Senai@134; TrustServerCertificate = True");
 
             // String de conexão  sql database - asure
-            optionsBuilder.UseSqlServer("Server=tcp:eventm-sever.database.windows.net,1433;" +
-            "Initial Catalog=EventMDatabase;Encrypt=True;TrustServerCertificate=False;" +
-            "Connection Timeout=30;User Id = eventm-sever; Pwd=Senai@134;");
+            //optionsBuilder.UseSqlServer("Server=tcp:eventm-sever.database.windows.net,1433;" +
+            //"Initial Catalog=EventMDatabase;Encrypt=True;TrustServerCertificate=False;" +
+            //"Connection Timeout=30;User Id = eventm-sever; Pwd=Senai@134;");
 
             base.OnConfiguring(optionsBuilder);
         }

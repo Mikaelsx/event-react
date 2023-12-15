@@ -37,6 +37,7 @@ namespace webapi.event_.Repositories
                         }
 
                     }).FirstOrDefault(c => c.IdComentarioEvento == id)!;
+                // .Where( == c.Exibe == true && c.idEvento == id).ToList();
             }
             catch (Exception)
             {

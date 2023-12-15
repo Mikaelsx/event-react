@@ -102,5 +102,17 @@ namespace webapi.event_.Repositories
                 throw;
             }
         }
+
+        public List<Usuario> Listar()
+        {
+            try
+            {
+                return _context.Usuario.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
